@@ -4,11 +4,22 @@ from urllib.request import urlopen
 from selenium import webdriver
 import csv,time,re,os
 
-username = "yl1133"
-password = ""
+# 第一次使用：
+# 需要安装python
+# 需要安装bs4： pip install bs4
+# 需要安装chromedriver，win可以使用choco install chromedriver 进行安装
+
+## 以下信息根据需要自己填写
+username = "yl1133" #jira 账号 yl1133
+password = "" #jira密码
+filter = '12852'#筛选器对应的序号，jira搜索规则保存后的filter，例：http://jira.yealink.com:8080/issues/?filter=12852
+excel_name = "TestCases.csv"#excel文件名, 保存在运行目录
 
 assert username, "username is empty!"
 assert password, "password is empty!"
+assert filter, "filter is empty!"
+assert excel_name, "save file is empty!"
+
 # ++++++++++++++使用说明+++++++++++++++++++++++++
 # 1.pip install bs4'
 # 2.按照下列字段，在jira筛选并保存筛选器
@@ -16,7 +27,7 @@ assert password, "password is empty!"
 # +++++++++++++++使用说明++++++++++++++++++++++++
 
 root_url = "http://jira.yealink.com:8080"
-excel_name = "TestCases.csv"#excel文件名
+
 csv_file = open(excel_name,"w",newline='')
 writer = csv.writer(csv_file)
 writer.writerow(['项目','主题','用例链接','模块','状态'])
@@ -25,7 +36,6 @@ writer.writerow(['项目','主题','用例链接','模块','状态'])
 # writer.writerow([project,summary,bug_url,components,assignee,created_time,status,bug_level,who_solve,gailv,priority,creator,resolution,watches,bugDahui,Developer,updated_time])
 # writer.writerow(['主题','模块','经办人','用例级别','状态','PC自测结果','报告人','描述','测试用例类型'])
 # writer.writerow([summary,bug_url,components,assignee,created_time,status,bug_level])
-filter = '12849'#筛选器对应的序号
 
 login_url="http://jira.yealink.com:8080/login.jsp"
 # 创建session请求对象，保存登录会话请求u
