@@ -42,7 +42,7 @@ prompt                 = no
 
 [ req_distinguished_name ]
  O                      = $PROJECT_NAME
- CN                     = 192.168.1.12
+ CN                     = uc20.yealink.com
 EOF
 
 cat > client_cert.conf << EOF  
@@ -52,7 +52,7 @@ prompt                 = no
 
 [ req_distinguished_name ]
  O                      = $PROJECT_NAME Device Certificate
- CN                     = 192.168.1.12
+ CN                     = test_tcp
 EOF
 
 rm *.key

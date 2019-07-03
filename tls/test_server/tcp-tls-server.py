@@ -1,6 +1,7 @@
 import socket
 import ssl
 import packet
+import time
 
 class server_ssl:
     def build_listen(self):
@@ -11,13 +12,12 @@ class server_ssl:
         context.load_cert_chain(certfile=CERT_FILE, keyfile=KEY_FILE)
         context.load_verify_locations(CA_FILE)
         context.verify_mode = ssl.CERT_REQUIRED
-        context.options |= ssl.OP_NO_TICKET
 
         # 监听端口
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0) as sock:
             # 将socket打包成SSL socket
             with context.wrap_socket(sock, server_side=True) as ssock:
-                ssock.bind(('0.0.0.0', 4567))
+                ssock.bind(('0.0.0.0', 23460))
                 ssock.listen(5)
                 while True:
                     # 接收客户端连接
@@ -45,6 +45,7 @@ class server_ssl:
 
                         rsp_data = bytes(req_data_len)
                         rsp_packet = packet.encode_server_response(rsp_data)
+                        time.sleep(1)
                         client_socket.send(rsp_packet)
 
                     client_socket.close()
